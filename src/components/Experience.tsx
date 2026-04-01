@@ -6,7 +6,7 @@ export default function Experience() {
     <section id="about" className={`section ${styles.experienceSection}`}>
       <div className={`container ${styles.container}`}>
         <div className={styles.imageContainer}>
-          <Image src="/designer_portrait.png" alt="Designer Portrait" fill className={styles.image} />
+          <Image src="/experience_portrait.jpg" alt="Experience Designer" fill className={styles.image} />
         </div>
         <div className={styles.content}>
           <p className={styles.label}>Who I Am</p>
@@ -19,16 +19,6 @@ export default function Experience() {
             I believe that great design is not just about looking good, it's about making a 
             meaningful impact. Let's work together to bring your vision to life.
           </p>
-          <div className={styles.stats}>
-            <div>
-              <h4 className={styles.statNum}>120+</h4>
-              <p className={styles.statLabel}>Projects Completed</p>
-            </div>
-            <div>
-              <h4 className={styles.statNum}>15</h4>
-              <p className={styles.statLabel}>Years Experience</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
