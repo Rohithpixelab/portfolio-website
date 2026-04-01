@@ -2,10 +2,10 @@ import styles from './Protocol.module.css';
 
 export default function Protocol() {
   const steps = [
-    { num: "01", title: "Discovery", desc: "Understanding your goals and vision" },
-    { num: "02", title: "Design", desc: "Creating the visual aesthetics and UX" },
-    { num: "03", title: "Dev", desc: "Building the solution with modern tech" },
-    { num: "04", title: "Launch", desc: "Deploying and delivering the final product" }
+    { num: "01", title: "Understand", desc: "I study your business, users, and problems" },
+    { num: "02", title: "Design", desc: "I craft intuitive, conversion-focused experiences" },
+    { num: "03", title: "Build", desc: "From UI to functional systems" },
+    { num: "04", title: "Scale", desc: "Optimize, automate, and improve continuously" }
   ];
 
   return (

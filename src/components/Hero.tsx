@@ -29,14 +29,14 @@ export default function Hero() {
           ROHITH S
         </div>
         <h1 className={styles.title}>
-          I design and create <span className="text-gradient">digital experiences</span> that look good and perform.
+          I design and create <span className="text-gradient">digital experiences</span> that looks good and performs.
         </h1>
         <p className={styles.subtitle}>
-          UI/UX Designer &bull; Web Developer &bull; Photographer &bull; Editor
+          UI/UX Designer &bull; Visual Storyteller &bull; Product Builder
         </p>
         <div className={styles.actions}>
-          <a href="#contact" className="btn btn-primary">Hire Me</a>
-          <a href="#work" className="btn btn-secondary">See Work</a>
+          <a href="#contact" className="btn btn-primary">Let’s Build Something</a>
+          <a href="#work" className="btn btn-secondary">View works</a>
         </div>
       </div>
     </section>

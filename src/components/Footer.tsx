@@ -6,13 +6,12 @@ export default function Footer() {
       <div className={`container ${styles.container}`}>
         <div className={styles.logo}>Rohith S.</div>
         <div className={styles.copy}>
-          &copy; {new Date().getFullYear()} All rights reserved.
+          &copy; {new Date().getFullYear()} All rights reserved Pixelab Medias.
         </div>
         <div className={styles.socials}>
-          <a href="#" className={styles.link}>Twitter</a>
-          <a href="#" className={styles.link}>LinkedIn</a>
-          <a href="#" className={styles.link}>Dribbble</a>
-          <a href="#" className={styles.link}>GitHub</a>
+          <a href="https://github.com/Rohithpixelab" target="_blank" rel="noopener noreferrer" className={styles.link}>GitHub</a>
+          <a href="https://www.linkedin.com/in/ux-rohiths/" target="_blank" rel="noopener noreferrer" className={styles.link}>LinkedIn</a>
+          <a href="https://www.instagram.com/ux.rohith/" target="_blank" rel="noopener noreferrer" className={styles.link}>Instagram</a>
         </div>
       </div>
     </footer>
