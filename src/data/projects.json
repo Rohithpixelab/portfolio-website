@@ -1,0 +1,6 @@
+[
+  { "id": 1, "title": "Aurora Mobile OS", "img": "/project_aurora.png", "class": "tall" },
+  { "id": 2, "title": "Vector Portfolio", "img": "/project_vector.png", "class": "wide" },
+  { "id": 3, "title": "Synth Core", "img": "/project_synth.png", "class": "normal" },
+  { "id": 4, "title": "Neon City", "img": "/project_city.png", "class": "large" }
+]
