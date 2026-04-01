@@ -7,19 +7,34 @@ import Experience from "../components/Experience";
 import Protocol from "../components/Protocol";
 import CTA from "../components/CTA";
 import Footer from "../components/Footer";
+import FadeInScroll from "../components/FadeInScroll";
 
 export default function Home() {
   return (
     <main>
       <Navbar />
       <Hero />
-      <FeaturedProjects />
-      <Services />
-      <VisualVoid />
-      <Experience />
-      <Protocol />
-      <CTA />
-      <Footer />
+      <FadeInScroll>
+        <FeaturedProjects />
+      </FadeInScroll>
+      <FadeInScroll>
+        <Services />
+      </FadeInScroll>
+      <FadeInScroll>
+        <VisualVoid />
+      </FadeInScroll>
+      <FadeInScroll>
+        <Experience />
+      </FadeInScroll>
+      <FadeInScroll>
+        <Protocol />
+      </FadeInScroll>
+      <FadeInScroll>
+        <CTA />
+      </FadeInScroll>
+      <FadeInScroll>
+        <Footer />
+      </FadeInScroll>
     </main>
   );
 }
