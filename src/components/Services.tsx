@@ -9,7 +9,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className={`section ${styles.servicesSection}`}>
+    <section id="services" className={`section ${styles.servicesSection} dotted-bg`}>
       <div className="container">
         <p className={styles.label}>Expertise</p>
         <h2 className="section-title">Services Rendered</h2>

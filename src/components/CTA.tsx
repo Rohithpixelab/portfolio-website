@@ -2,7 +2,7 @@ import styles from './CTA.module.css';
 
 export default function CTA() {
   return (
-    <section id="contact" className={`section ${styles.ctaSection}`}>
+    <section id="contact" className={`section ${styles.ctaSection} dotted-bg`}>
       <div className={`container ${styles.container}`}>
         <h2 className={styles.title}>
           Let's build<br />

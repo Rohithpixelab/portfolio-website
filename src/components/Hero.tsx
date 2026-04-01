@@ -24,7 +24,7 @@ const typingChar: Variants = {
 
 const renderText = (text: string) => {
   return text.split('').map((char, index) => (
-    <motion.span key={index} variants={typingChar} style={{ whiteSpace: 'pre' }}>
+    <motion.span key={index} variants={typingChar} style={{ whiteSpace: 'pre-wrap' }}>
       {char}
     </motion.span>
   ));
@@ -86,15 +86,9 @@ export default function Hero() {
         >
           {renderText("I design and create ")}
           <motion.span className="text-gradient">
-            {renderText("digital")}
+            {renderText("digital experiences ")}
           </motion.span>
-          <br />
-          <motion.span className="text-gradient">
-            {renderText("experiences ")}
-          </motion.span>
-          {renderText("that looks good and")}
-          <br />
-          {renderText("performs.")}
+          {renderText("that looks good and performs.")}
         </motion.h1>
 
         <motion.div 
