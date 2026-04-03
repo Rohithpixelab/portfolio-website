@@ -6,7 +6,6 @@
   padding-top: 5rem; /* to account for navbar */
   text-align: left;
   position: relative;
-  overflow: hidden;
   background-color: var(--bg-default, #000); /* ensure background is dark, maybe default or explicitly #000 depending on globals */
 }
 
@@ -34,6 +33,7 @@
   mask-image: radial-gradient(200px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), black, transparent);
   -webkit-mask-image: radial-gradient(200px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), black, transparent);
   z-index: 0;
+  will-change: mask-image, -webkit-mask-image;
 }
 
 .glow {
