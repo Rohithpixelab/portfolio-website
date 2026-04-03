@@ -24,7 +24,6 @@ export default buildConfig({
       slug: 'media',
       upload: {
         staticDir: path.resolve(dirname, '../public/media'),
-        staticURL: '/media',
         mimeTypes: ['image/*', 'video/*'],
       },
       fields: [
