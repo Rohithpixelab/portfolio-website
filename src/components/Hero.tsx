@@ -97,7 +97,7 @@ export default function Hero() {
           animate="visible"
         >
           <motion.p variants={revealItem} className={styles.subtitle}>
-            UI/UX Designer &bull; Visual Storyteller &bull; Product Builder
+            UI/UX Designer &bull; Visual Storyteller
           </motion.p>
           <motion.div variants={revealItem} className={styles.actions}>
             <a href="#contact" className="btn btn-primary">Let’s Build Something</a>
