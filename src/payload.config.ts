@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -22,9 +22,11 @@ export default buildConfig({
     },
     {
       slug: 'media',
+      access: {
+        read: () => true,
+      },
       upload: {
         staticDir: path.resolve(dirname, '../public/media'),
-        staticURL: '/media',
         mimeTypes: ['image/*', 'video/*'],
       },
       fields: [
@@ -36,6 +38,9 @@ export default buildConfig({
     },
     {
       slug: 'projects',
+      access: {
+        read: () => true,
+      },
       fields: [
         {
           name: 'title',
@@ -64,6 +69,16 @@ export default buildConfig({
           name: 'description',
           type: 'textarea',
           admin: { description: 'Main project description paragraphs.' },
+        },
+        {
+          name: 'externalLink',
+          type: 'text',
+          admin: { description: 'Optional link to a live project or external platform.' },
+        },
+        {
+          name: 'externalLinkLabel',
+          type: 'text',
+          admin: { description: 'Label for the external link button (e.g., "View Live Platform" or "View on Dribbble"). Default is "View Live Project" if left blank.' },
         },
         {
           name: 'techStack',
@@ -110,8 +125,26 @@ export default buildConfig({
               type: 'select',
               options: ['normal', 'wide', 'tall', 'large'],
               defaultValue: 'normal',
+              admin: { hidden: true } 
             }
           ]
+        },
+        {
+          name: 'bulkUploaderUI',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: '@/components/BulkUploadField#BulkUploadField'
+            }
+          }
+        },
+        {
+          name: 'bulkGallery',
+          label: 'Selected Bulk Images',
+          type: 'relationship',
+          relationTo: 'media',
+          hasMany: true,
+          admin: { description: 'These are the images sequentially uploaded by the component above.' }
         }
       ],
     },
@@ -120,9 +153,9 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || '',
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URI || 'file:./payload.db',
     },
   }),
   editor: lexicalEditor({}),

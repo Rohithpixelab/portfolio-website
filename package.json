@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.81.0",
+    "@payloadcms/db-sqlite": "^3.81.0",
     "@payloadcms/next": "^3.81.0",
     "@payloadcms/richtext-lexical": "^3.81.0",
     "@payloadcms/translations": "^3.81.0",
