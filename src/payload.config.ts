@@ -129,23 +129,6 @@ export default buildConfig({
               admin: { hidden: true } 
             }
           ]
-        },
-        {
-          name: 'bulkUploaderUI',
-          type: 'ui',
-          admin: {
-            components: {
-              Field: '@/components/BulkUploadField#BulkUploadField'
-            }
-          }
-        },
-        {
-          name: 'bulkGallery',
-          label: 'Selected Bulk Images',
-          type: 'relationship',
-          relationTo: 'media',
-          hasMany: true,
-          admin: { description: 'These are the images sequentially uploaded by the component above.' }
         }
       ],
     },
