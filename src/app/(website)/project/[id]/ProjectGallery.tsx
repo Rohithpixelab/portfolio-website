@@ -49,7 +49,7 @@ export default function ProjectGallery({ gallery }: { gallery: any[] }) {
     <>
       <section className={styles.gallerySection}>
         <div className="container">
-          <h2 className={styles.galleryTitle}>Impact Gallery</h2>
+          <h2 className={styles.galleryTitle}>Project Gallery</h2>
           <div className={styles.galleryGrid}>
             {gallery.map((item: any, idx: number) => {
               const mediaUrl = item.media?.url || '';

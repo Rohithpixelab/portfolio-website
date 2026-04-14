@@ -108,7 +108,7 @@ export default buildConfig({
         {
           name: 'gallery',
           type: 'array',
-          label: 'Impact Gallery',
+          label: 'Project Gallery',
           fields: [
             {
               name: 'media',
