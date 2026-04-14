@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -26,7 +27,7 @@ export default buildConfig({
         read: () => true,
       },
       upload: {
-        staticDir: path.resolve(dirname, '../public/media'),
+        disableLocalStorage: true,
         mimeTypes: ['image/*', 'video/*'],
       },
       fields: [
@@ -153,10 +154,27 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./payload.db',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
     },
   }),
   editor: lexicalEditor({}),
+  plugins: [
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET_NAME as string,
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY as string,
+        },
+        region: process.env.S3_REGION as string,
+        endpoint: process.env.S3_ENDPOINT as string,
+        forcePathStyle: true,
+      },
+    }),
+  ],
 })
