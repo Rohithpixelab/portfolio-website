@@ -101,7 +101,8 @@ export default buildConfig({
           admin: {
             description: 'Limit: Max 4 projects on homepage.',
           },
-          validate: async (val, { payload, id }) => {
+          validate: async (val, args) => {
+            const { payload, id } = args as any;
             // Only run validation on the server; client-side can't query the DB
             if (!payload || typeof payload.find !== 'function') return true;
 
