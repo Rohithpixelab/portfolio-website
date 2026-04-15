@@ -15,20 +15,18 @@ export default async function WorksPage() {
     const docs = await payload.find({
       collection: 'projects',
       limit: 100, // Fetch up to 100 projects
-      sort: '-createdAt', // Optional sorting, can be adjusted
-      depth: 1, // Ensure relationships like coverMedia are populated
+      sort: '-createdAt' // Optional sorting, can be adjusted
     });
     // Payload docs fetched successfully
-    projects = docs.docs;
+    projects = docs.docs || [];
   } catch (error) {
     // Fallback if Supabase/Database is not yet connected
     console.error("Payload CMS connection error:", error);
-    console.log("Serving hardcoded projects as fallback.");
-    projects = projectsData;
+    projects = [];
   }
 
   // Use fallback if the CMS is connected but empty
-  const displayProjects = projects.length > 0 ? projects : projectsData;
+  const displayProjects = (projects && projects.length > 0) ? projects : projectsData;
 
   return (
     <main className={styles.page}>

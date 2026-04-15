@@ -18,23 +18,21 @@ export default async function FeaturedProjects() {
         },
       },
       limit: 4,
-      depth: 1, // Ensure relationships like coverMedia are populated
     });
     // Payload docs fetched successfully
     console.log(`Fetched ${docs.docs.length} featured projects from CMS`);
-    projects = docs.docs;
-    hasMore = docs.totalDocs > 4;
+    projects = docs.docs || [];
+    hasMore = (docs.totalDocs || 0) > 4;
   } catch (error) {
     // Fallback if Supabase/Database is not yet connected
     console.error("Payload CMS connection error:", error);
-    console.log("Serving hardcoded projects as fallback.");
-    projects = projectsData.slice(0, 4);
+    projects = [];
     hasMore = projectsData.length > 4;
   }
 
   // Use fallback if the CMS is connected but empty
-  const displayProjects = projects.length > 0 ? projects : projectsData.slice(0, 4);
-  if (projects.length === 0) hasMore = projectsData.length > 4;
+  const displayProjects = (projects && projects.length > 0) ? projects : projectsData.slice(0, 4);
+  if (!projects || projects.length === 0) hasMore = projectsData.length > 4;
 
   return (
     <section id="work" className={`section ${styles.projectsSection}`}>
