@@ -14,6 +14,28 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      breakpoints: [
+        {
+          label: 'Mobile',
+          name: 'mobile',
+          width: 375,
+          height: 667,
+        },
+        {
+          label: 'Tablet',
+          name: 'tablet',
+          width: 768,
+          height: 1024,
+        },
+        {
+          label: 'Desktop',
+          name: 'desktop',
+          width: 1440,
+          height: 900,
+        },
+      ],
+    },
   },
   collections: [
     {
@@ -39,6 +61,19 @@ export default buildConfig({
     },
     {
       slug: 'projects',
+      admin: {
+        useAsTitle: 'title',
+        livePreview: {
+          url: '/project/{{id}}',
+        },
+        components: {
+          views: {
+            list: {
+              Component: '@/components/ProjectsListView',
+            },
+          },
+        },
+      },
       access: {
         read: () => true,
       },
@@ -82,6 +117,46 @@ export default buildConfig({
           admin: { description: 'Label for the external link button (e.g., "View Live Platform" or "View on Dribbble"). Default is "View Live Project" if left blank.' },
         },
         {
+          name: 'showOnHomeCounter',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: '@/components/HomepageCounter#default',
+            }
+          }
+        },
+        {
+          name: 'showOnHome',
+          type: 'checkbox',
+          label: 'Show on Homepage',
+          defaultValue: false,
+          admin: {
+            description: 'Limit: Max 4 projects on homepage.',
+          },
+          validate: async (val, { payload, id }) => {
+            // Only run validation on the server; client-side can't query the DB
+            if (!payload || typeof payload.find !== 'function') return true;
+
+            if (val === true) {
+              const { totalDocs } = await payload.find({
+                collection: 'projects',
+                where: {
+                  showOnHome: { equals: true },
+                },
+              });
+              // To handle edits, we check if the current doc is already one of the 'true' ones
+              if (totalDocs >= 4) {
+                // If it's a new doc or this one wasn't previously 'true', block it
+                const currentDoc = id ? await payload.findByID({ collection: 'projects', id }) : null;
+                if (!currentDoc || !currentDoc.showOnHome) {
+                  return 'Home page limit (4/4) reached. Deselect another project first.';
+                }
+              }
+            }
+            return true;
+          },
+        },
+        {
           name: 'techStack',
           type: 'group',
           fields: [
@@ -103,32 +178,20 @@ export default buildConfig({
           type: 'select',
           options: ['tall', 'wide', 'normal', 'large'],
           defaultValue: 'normal',
-          admin: { description: 'Grid sizing on the home page.' }
+          admin: { 
+            hidden: true, // Hide from UI as requested
+            description: 'Grid sizing on the home page.' 
+          }
         },
         {
-          name: 'gallery',
-          type: 'array',
+          name: 'projectImages',
+          type: 'upload',
+          relationTo: 'media',
+          hasMany: true,
           label: 'Project Gallery',
-          fields: [
-            {
-              name: 'media',
-              type: 'upload',
-              relationTo: 'media',
-              required: true,
-            },
-            {
-              name: 'videoUrl',
-              type: 'text',
-              admin: { description: 'Optional external video link (YouTube/Vimeo) if not uploading a file directly.' }
-            },
-            {
-              name: 'size',
-              type: 'select',
-              options: ['normal', 'wide', 'tall', 'large'],
-              defaultValue: 'normal',
-              admin: { hidden: true } 
-            }
-          ]
+          admin: { 
+            description: 'Select or upload multiple images/videos at once.',
+          },
         }
       ],
     },

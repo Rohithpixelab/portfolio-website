@@ -1,0 +1,244 @@
+.projects-list-view {
+  padding: 2rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ─── Header ─── */
+.projects-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.projects-list-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f4f4f5;
+  margin: 0;
+}
+
+.projects-list-subtitle {
+  font-size: 0.875rem;
+  color: #71717a;
+  margin: 0.25rem 0 0;
+}
+
+.projects-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.projects-create-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.projects-create-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* ─── Grid ─── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ─── Card ─── */
+.project-card {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border-color: #3f3f46;
+}
+
+/* Image wrapper */
+.project-card__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #0b0b0e;
+}
+
+.project-card__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-card__media {
+  transform: scale(1.05);
+}
+
+.project-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  font-size: 2.5rem;
+}
+
+/* Hover overlay */
+.project-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.project-card:hover .project-card__overlay {
+  opacity: 1;
+}
+
+.project-card__edit-icon {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(37, 99, 235, 0.85);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+
+/* Homepage badge */
+.project-card__badge {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  background: rgba(37, 99, 235, 0.9);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 5px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+/* Info section */
+.project-card__info {
+  padding: 1rem 1.15rem;
+}
+
+.project-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-card__category {
+  font-size: 0.75rem;
+  color: #71717a;
+  margin: 0.3rem 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Empty state ─── */
+.projects-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: #18181b;
+  border: 1px dashed #27272a;
+  border-radius: 16px;
+}
+
+.projects-empty__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.projects-empty h3 {
+  font-size: 1.25rem;
+  color: #f4f4f5;
+  margin: 0 0 0.5rem;
+}
+
+.projects-empty p {
+  color: #71717a;
+  font-size: 0.875rem;
+  margin: 0 0 1.5rem;
+}
+
+/* ─── Skeleton loading ─── */
+.project-card--skeleton {
+  pointer-events: none;
+}
+
+.project-card__image-skeleton {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(90deg, #1a1a2e 25%, #27272a 50%, #1a1a2e 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.project-card__info-skeleton {
+  padding: 1rem 1.15rem;
+}
+
+.skeleton-line {
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1a1a2e 25%, #27272a 50%, #1a1a2e 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.skeleton-line--title {
+  height: 1rem;
+  width: 70%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-line--subtitle {
+  height: 0.7rem;
+  width: 45%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

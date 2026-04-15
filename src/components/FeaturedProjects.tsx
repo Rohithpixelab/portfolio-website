@@ -8,14 +8,19 @@ import configPromise from '../payload.config';
 export default async function FeaturedProjects() {
   let projects: any[] = [];
   let hasMore = false;
-  
   try {
     const payload = await getPayload({ config: configPromise });
     const docs = await payload.find({
       collection: 'projects',
+      where: {
+        showOnHome: {
+          equals: true,
+        },
+      },
       limit: 4,
     });
     // Payload docs fetched successfully
+    console.log(`Fetched ${docs.docs.length} featured projects from CMS`);
     projects = docs.docs;
     hasMore = docs.totalDocs > 4;
   } catch (error) {

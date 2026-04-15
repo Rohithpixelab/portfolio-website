@@ -8,6 +8,8 @@ import CTA from "../../components/CTA";
 import Footer from "../../components/Footer";
 import FadeInScroll from "../../components/FadeInScroll";
 
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   return (
     <main>
