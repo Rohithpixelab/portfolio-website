@@ -24,17 +24,7 @@ export default function ProjectPageClient({
   });
 
   // Cover media
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
-  
-  const getFullUrl = (url?: string) => {
-    if (!url) return '';
-    if (url.startsWith('/') && !url.startsWith('//')) {
-      return `${serverUrl}${url}`;
-    }
-    return url;
-  };
-
-  const coverUrl = getFullUrl(project?.coverMedia?.url);
+  const coverUrl = project?.coverMedia?.url || '';
   const isCoverVideo = project?.coverMedia?.mimeType?.startsWith('video/');
 
   // Tech stack parsing (comma separated strings)
@@ -59,7 +49,7 @@ export default function ProjectPageClient({
   }));
 
   // Next project cover
-  const nextCoverUrl = getFullUrl(nextProject?.coverMedia?.url);
+  const nextCoverUrl = nextProject?.coverMedia?.url || '';
   const isNextCoverVideo = nextProject?.coverMedia?.mimeType?.startsWith('video/');
 
   return (

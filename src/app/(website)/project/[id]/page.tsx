@@ -39,17 +39,7 @@ export default async function ProjectPage({
   const nextProject = allProjects.docs[(currentIndex + 1) % allProjects.docs.length];
 
   // Helper mappings
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
-  
-  const getFullUrl = (url?: string) => {
-    if (!url) return '';
-    if (url.startsWith('/') && !url.startsWith('//')) {
-      return `${serverUrl}${url}`;
-    }
-    return url;
-  };
-
-  const coverUrl = getFullUrl(project.coverMedia?.url);
+  const coverUrl = project.coverMedia?.url || '';
   const isCoverVideo = project.coverMedia?.mimeType?.startsWith('video/');
 
   const parseList = (str?: string) =>
@@ -70,7 +60,7 @@ export default async function ProjectPage({
     size: 'normal',
   }));
 
-  const nextCoverUrl = getFullUrl((nextProject as any)?.coverMedia?.url);
+  const nextCoverUrl = (nextProject as any)?.coverMedia?.url || '';
   const isNextCoverVideo = (nextProject as any)?.coverMedia?.mimeType?.startsWith('video/');
 
   return (
