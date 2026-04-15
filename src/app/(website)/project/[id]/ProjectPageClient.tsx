@@ -21,7 +21,6 @@ export default function ProjectPageClient({
     initialData: initialProject,
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
     depth: 2,
-    collection: 'projects',
   });
 
   // Cover media
