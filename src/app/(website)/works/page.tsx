@@ -15,13 +15,15 @@ export default async function WorksPage() {
     const docs = await payload.find({
       collection: 'projects',
       limit: 100, // Fetch up to 100 projects
-      sort: '-createdAt' // Optional sorting, can be adjusted
+      sort: '-createdAt', // Optional sorting, can be adjusted
+      depth: 1, // Ensure relationships like coverMedia are populated
     });
     // Payload docs fetched successfully
     projects = docs.docs;
   } catch (error) {
     // Fallback if Supabase/Database is not yet connected
-    console.log("Payload CMS not connected yet. Serving hardcoded projects.");
+    console.error("Payload CMS connection error:", error);
+    console.log("Serving hardcoded projects as fallback.");
     projects = projectsData;
   }
 
@@ -42,8 +44,14 @@ export default async function WorksPage() {
           {displayProjects.map((p: any, idx: number) => {
             const projectId = p.id || idx;
             
-            // Extract the secure Media URL, falling back to older direct paths (like the initial JSON data)
-            const srcUrl = p.coverMedia?.url || p.img || '';
+            // Extract the secure Media URL
+            // Ensure we handle both absolute URLs (S3) and relative URLs (local/dev)
+            let srcUrl = p.coverMedia?.url || p.img || '';
+            const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
+            
+            if (srcUrl.startsWith('/') && !srcUrl.startsWith('//')) {
+              srcUrl = `${serverUrl}${srcUrl}`;
+            }
             
             // Check if it's a raw video file from Payload
             const isPayloadVideo = p.coverMedia?.mimeType?.startsWith('video/');

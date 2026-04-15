@@ -18,6 +18,7 @@ export default async function FeaturedProjects() {
         },
       },
       limit: 4,
+      depth: 1, // Ensure relationships like coverMedia are populated
     });
     // Payload docs fetched successfully
     console.log(`Fetched ${docs.docs.length} featured projects from CMS`);
@@ -25,7 +26,8 @@ export default async function FeaturedProjects() {
     hasMore = docs.totalDocs > 4;
   } catch (error) {
     // Fallback if Supabase/Database is not yet connected
-    console.log("Payload CMS not connected yet. Serving hardcoded projects.");
+    console.error("Payload CMS connection error:", error);
+    console.log("Serving hardcoded projects as fallback.");
     projects = projectsData.slice(0, 4);
     hasMore = projectsData.length > 4;
   }
@@ -44,8 +46,14 @@ export default async function FeaturedProjects() {
             const cssClass = styles[p.class] || '';
             const projectId = p.id || idx;
             
-            // Extract the secure Media URL, falling back to older direct paths (like the initial JSON data)
-            const srcUrl = p.coverMedia?.url || p.img || '';
+            // Extract the secure Media URL
+            // Ensure we handle both absolute URLs (S3) and relative URLs (local/dev)
+            let srcUrl = p.coverMedia?.url || p.img || '';
+            const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
+            
+            if (srcUrl.startsWith('/') && !srcUrl.startsWith('//')) {
+              srcUrl = `${serverUrl}${srcUrl}`;
+            }
             
             // Check if it's a raw video file from Payload, or an external link
             const isPayloadVideo = p.coverMedia?.mimeType?.startsWith('video/');
