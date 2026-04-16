@@ -177,6 +177,22 @@ export default buildConfig({
           },
         },
         {
+          name: 'videoLinks',
+          type: 'array',
+          label: 'External Video Links (YouTube / Supabase)',
+          admin: {
+            description: 'Add links to videos on YouTube, Vimeo, Supabase, or any external platform.',
+          },
+          fields: [
+            {
+              name: 'url',
+              type: 'text',
+              label: 'Video URL',
+              required: true,
+            },
+          ],
+        },
+        {
           name: 'slug',
           type: 'text',
           unique: true,

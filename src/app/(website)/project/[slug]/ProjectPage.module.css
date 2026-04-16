@@ -537,3 +537,46 @@
   background: black;
   border-radius: 0.5rem;
 }
+
+.videoThumbnailWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playBadge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(50px, 10vw, 80px);
+  height: clamp(50px, 10vw, 80px);
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.galleryItem:hover .playBadge {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--accent-hover);
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+}
+
+.playIcon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent #ffffff;
+  margin-left: 6px;
+}

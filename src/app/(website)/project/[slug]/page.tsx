@@ -63,12 +63,33 @@ export default async function ProjectPage({
   const externalLink = project.externalLink || '';
   const externalLinkLabel = project.externalLinkLabel || 'View Live Project';
 
+  const formatVideoUrl = (url: string) => {
+    if (!url) return '';
+    // Convert YouTube watch links to embed links
+    if (url.includes('youtube.com/watch?v=')) {
+      return url.replace('watch?v=', 'embed/');
+    }
+    if (url.includes('youtu.be/')) {
+      return url.replace('youtu.be/', 'youtube.com/embed/');
+    }
+    return url;
+  };
+
   const rawGallery: any[] = project.projectImages || [];
-  const combinedGallery = rawGallery.map((mediaDoc: any) => ({
+  const galleryImages = rawGallery.map((mediaDoc: any) => ({
     media: mediaDoc,
     videoUrl: null,
     size: 'normal',
   }));
+
+  const videoLinks: any[] = project.videoLinks || [];
+  const galleryVideos = videoLinks.map((v: any) => ({
+    media: null,
+    videoUrl: formatVideoUrl(v.url),
+    size: 'wide', // Wide looks better for video players
+  }));
+
+  const combinedGallery = [...galleryImages, ...galleryVideos];
 
   const nextCoverUrl = (nextProject as any)?.coverMedia?.url || '';
   const isNextCoverVideo = (nextProject as any)?.coverMedia?.mimeType?.startsWith('video/');
