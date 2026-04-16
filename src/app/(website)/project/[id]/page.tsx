@@ -8,6 +8,8 @@ import Footer from '../../../../components/Footer';
 import ProjectGallery from './ProjectGallery';
 import styles from './ProjectPage.module.css';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProjectPage({
   params,
 }: {

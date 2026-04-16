@@ -7,6 +7,8 @@ import Footer from '../../../components/Footer';
 import styles from './Works.module.css';
 import projectsData from '../../../data/projects.json';
 
+export const dynamic = 'force-dynamic';
+
 export default async function WorksPage() {
   let projects: any[] = [];
   
