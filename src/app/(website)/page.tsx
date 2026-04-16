@@ -2,7 +2,6 @@ import Navbar from "../../components/Navbar";
 import Hero from "../../components/Hero";
 import FeaturedProjects from "../../components/FeaturedProjects";
 import Services from "../../components/Services";
-import VisualVoid from "../../components/VisualVoid";
 import Experience from "../../components/Experience";
 import Protocol from "../../components/Protocol";
 import CTA from "../../components/CTA";
@@ -21,9 +20,6 @@ export default function Home() {
       </FadeInScroll>
       <FadeInScroll>
         <Services />
-      </FadeInScroll>
-      <FadeInScroll>
-        <VisualVoid />
       </FadeInScroll>
       <FadeInScroll>
         <Experience />

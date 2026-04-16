@@ -13,18 +13,25 @@ export const dynamic = 'force-dynamic';
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
   const payload = await getPayload({ config: configPromise });
 
-  // Fetch the current project
-  const project: any = await payload.findByID({
+  // Fetch the current project by slug
+  const result = await payload.find({
     collection: 'projects',
-    id,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
     depth: 2,
-  }).catch(() => null);
+  });
+
+  const project = result.docs[0];
 
   if (!project) {
     notFound();
@@ -37,8 +44,9 @@ export default async function ProjectPage({
     sort: 'createdAt',
   });
 
-  const currentIndex = allProjects.docs.findIndex((p: any) => String(p.id) === String(id));
+  const currentIndex = allProjects.docs.findIndex((p: any) => p.slug === slug);
   const nextProject = allProjects.docs[(currentIndex + 1) % allProjects.docs.length];
+  const nextIdentifier = (nextProject as any)?.slug || (nextProject as any)?.id;
 
   // Helper mappings
   const coverUrl = project.coverMedia?.url || '';
@@ -205,9 +213,9 @@ export default async function ProjectPage({
 
       <ProjectGallery gallery={combinedGallery} />
 
-      {nextProject && String(nextProject.id) !== String(id) && (
+      {nextProject && (nextProject as any).slug !== slug && (
         <section className={styles.nextSection}>
-          <Link href={`/project/${nextProject.id}`} className={styles.nextLink}>
+          <Link href={`/project/${nextIdentifier}`} className={styles.nextLink}>
             <div className={styles.nextBg}>
               {isNextCoverVideo ? (
                 <video
