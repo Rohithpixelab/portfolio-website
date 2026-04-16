@@ -79,14 +79,14 @@ export default async function ProjectPage({
   const galleryImages = rawGallery.map((mediaDoc: any) => ({
     media: mediaDoc,
     videoUrl: null,
-    size: 'normal',
+    size: 'wide', // Images stay full-width as per previous layout
   }));
 
   const videoLinks: any[] = project.videoLinks || [];
   const galleryVideos = videoLinks.map((v: any) => ({
     media: null,
     videoUrl: formatVideoUrl(v.url),
-    size: 'wide', // Wide looks better for video players
+    size: 'normal', // Changed to normal to allow 2 videos per line
   }));
 
   const combinedGallery = [...galleryImages, ...galleryVideos];

@@ -234,8 +234,8 @@
 }
 
 .galleryGrid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   width: 100%;
 }
@@ -270,23 +270,19 @@
 
 /* Gallery size variants */
 .gallery_normal {
-  /* Default: inherits column width */
+  grid-column: span 1;
 }
 
 .gallery_wide {
-  column-span: all;
-  width: 100%;
-  margin-bottom: 1.5rem;
+  grid-column: span 2;
 }
 
 .gallery_tall {
-  /* Height is dynamic, so it will naturally just display tall */
+  grid-column: span 1;
 }
 
 .gallery_large {
-  column-span: all;
-  width: 100%;
-  margin-bottom: 1.5rem;
+  grid-column: span 2;
 }
 
 /* ─── NEXT PROJECT ─── */
@@ -393,6 +389,9 @@
 }
 
 @media (max-width: 768px) {
+  .galleryGrid {
+    grid-template-columns: 1fr;
+  }
   .hero {
     min-height: 55vh;
   }
