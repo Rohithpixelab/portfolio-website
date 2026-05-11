@@ -29,9 +29,6 @@ export default buildConfig({
       upload: {
         disableLocalStorage: true,
         mimeTypes: ['image/*', 'video/*'],
-        limits: {
-          fileSize: 500000000, // 500MB
-        },
       },
       fields: [
         {
