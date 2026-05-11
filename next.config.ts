@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   /* config options here */
   // Forced cache restart 1
   reactCompiler: false,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '500mb',
+    },
+  },
+  serverActions: {
+    bodySizeLimit: '500mb',
+  },
   images: {
     remotePatterns: [
       {
