@@ -7,6 +7,8 @@ import Footer from '../../../components/Footer';
 import styles from './Works.module.css';
 import projectsData from '../../../data/projects.json';
 
+export const dynamic = 'force-dynamic';
+
 export default async function WorksPage() {
   let projects: any[] = [];
   
@@ -40,7 +42,7 @@ export default async function WorksPage() {
 
         <div className={styles.grid}>
           {displayProjects.map((p: any, idx: number) => {
-            const projectId = p.id || idx;
+            const projectIdentifier = p.slug || p.id || idx;
             
             // Extract the secure Media URL
             // Payload 3.0 provides absolute URLs for S3 and relative for local media
@@ -53,7 +55,7 @@ export default async function WorksPage() {
             const hasDetailPage = !!p.coverMedia;
             const CardWrapper = hasDetailPage
               ? ({ children }: { children: React.ReactNode }) => (
-                  <Link href={`/project/${projectId}`} className={styles.card}>
+                  <Link href={`/project/${projectIdentifier}`} className={styles.card}>
                     {children}
                   </Link>
                 )
@@ -64,7 +66,7 @@ export default async function WorksPage() {
                 );
             
             return (
-              <CardWrapper key={projectId}>
+              <CardWrapper key={projectIdentifier}>
                 {isPayloadVideo ? (
                   <video 
                     src={srcUrl} 

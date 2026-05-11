@@ -21,7 +21,6 @@ export default function Home() {
       <FadeInScroll>
         <Services />
       </FadeInScroll>
-
       <FadeInScroll>
         <Experience />
       </FadeInScroll>

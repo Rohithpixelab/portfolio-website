@@ -48,6 +48,20 @@ export default buildConfig({
       access: {
         read: () => true,
       },
+      hooks: {
+        beforeValidate: [
+          ({ data }) => {
+            if (data && !data.slug && data.title) {
+              const base = data.category ? `${data.title}-${data.category}` : data.title;
+              data.slug = base
+                .toLowerCase()
+                .replace(/ /g, '-')
+                .replace(/[^\w-]+/g, '');
+            }
+            return data;
+          },
+        ],
+      },
       fields: [
         {
           name: 'title',
@@ -164,7 +178,32 @@ export default buildConfig({
           admin: { 
             description: 'Select or upload multiple images/videos at once.',
           },
-        }
+        },
+        {
+          name: 'videoLinks',
+          type: 'array',
+          label: 'External Video Links (YouTube / Supabase)',
+          admin: {
+            description: 'Add links to videos on YouTube, Vimeo, Supabase, or any external platform.',
+          },
+          fields: [
+            {
+              name: 'url',
+              type: 'text',
+              label: 'Video URL',
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'slug',
+          type: 'text',
+          unique: true,
+          index: true,
+          admin: {
+            description: 'Auto-generated from title and category if left blank.'
+          },
+        },
       ],
     },
   ],

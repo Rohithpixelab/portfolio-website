@@ -29,10 +29,15 @@ export default function ProjectGallery({ gallery }: { gallery: any[] }) {
 
   if (!gallery || gallery.length === 0) return null;
 
+  const isIframeUrl = (url: string) => {
+    if (!url) return false;
+    return url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com');
+  };
+
   const activeMediaData = activeIndex !== null ? gallery[activeIndex] : null;
   const activeMediaUrl = activeMediaData?.media?.url || '';
   const isActiveVideo = activeMediaData?.media?.mimeType?.startsWith('video/') || !!activeMediaData?.videoUrl;
-  const isActiveIframe = !!activeMediaData?.videoUrl;
+  const isActiveIframe = !!activeMediaData?.videoUrl && isIframeUrl(activeMediaData.videoUrl);
   const activeVideoSrc = activeMediaData?.videoUrl || activeMediaUrl;
 
   const goNext = (e: React.MouseEvent) => {
@@ -54,7 +59,7 @@ export default function ProjectGallery({ gallery }: { gallery: any[] }) {
             {gallery.map((item: any, idx: number) => {
               const mediaUrl = item.media?.url || '';
               const isVideo = item.media?.mimeType?.startsWith('video/') || !!item.videoUrl;
-              const isIframe = !!item.videoUrl;
+              const isIframe = !!item.videoUrl && isIframeUrl(item.videoUrl);
               const videoSrc = item.videoUrl || mediaUrl;
               const sizeClass = styles[`gallery_${item.size || 'normal'}`] || '';
 
@@ -65,26 +70,26 @@ export default function ProjectGallery({ gallery }: { gallery: any[] }) {
                   onClick={() => setActiveIndex(idx)}
                 >
                   {isVideo ? (
-                    isIframe ? (
-                      <iframe
-                        src={item.videoUrl}
-                        title={`Gallery video ${idx + 1}`}
-                        className={styles.galleryMedia}
-                        style={{ pointerEvents: 'none' }} // to guarantee click passes to parent wrapper
-                        allowFullScreen
-                        allow="autoplay; encrypted-media"
-                      />
-                    ) : (
-                      <video
-                        src={videoSrc}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className={styles.galleryMedia}
-                        style={{ pointerEvents: 'none' }} // to guarantee click passes to wrapper
-                      />
-                    )
+                    <div className={styles.videoThumbnailWrapper}>
+                      {isIframe ? (
+                        <iframe
+                          src={item.videoUrl}
+                          title={`Gallery video ${idx + 1}`}
+                          className={styles.galleryMedia}
+                          style={{ pointerEvents: 'none' }} 
+                          allow="encrypted-media"
+                        />
+                      ) : (
+                        <video
+                          src={videoSrc}
+                          className={styles.galleryMedia}
+                          style={{ pointerEvents: 'none' }}
+                        />
+                      )}
+                      <div className={styles.playBadge}>
+                        <div className={styles.playIcon}></div>
+                      </div>
+                    </div>
                   ) : (
                     <Image
                       src={mediaUrl}

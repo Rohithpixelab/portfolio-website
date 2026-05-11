@@ -8,21 +8,30 @@ import Footer from '../../../../components/Footer';
 import ProjectGallery from './ProjectGallery';
 import styles from './ProjectPage.module.css';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
   const payload = await getPayload({ config: configPromise });
 
-  // Fetch the current project
-  const project: any = await payload.findByID({
+  // Fetch the current project by slug
+  const result = await payload.find({
     collection: 'projects',
-    id,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
     depth: 2,
-  }).catch(() => null);
+  });
+
+  const project = result.docs[0];
 
   if (!project) {
     notFound();
@@ -35,8 +44,9 @@ export default async function ProjectPage({
     sort: 'createdAt',
   });
 
-  const currentIndex = allProjects.docs.findIndex((p: any) => String(p.id) === String(id));
+  const currentIndex = allProjects.docs.findIndex((p: any) => p.slug === slug);
   const nextProject = allProjects.docs[(currentIndex + 1) % allProjects.docs.length];
+  const nextIdentifier = (nextProject as any)?.slug || (nextProject as any)?.id;
 
   // Helper mappings
   const coverUrl = project.coverMedia?.url || '';
@@ -53,12 +63,33 @@ export default async function ProjectPage({
   const externalLink = project.externalLink || '';
   const externalLinkLabel = project.externalLinkLabel || 'View Live Project';
 
+  const formatVideoUrl = (url: string) => {
+    if (!url) return '';
+    // Convert YouTube watch links to embed links
+    if (url.includes('youtube.com/watch?v=')) {
+      return url.replace('watch?v=', 'embed/');
+    }
+    if (url.includes('youtu.be/')) {
+      return url.replace('youtu.be/', 'youtube.com/embed/');
+    }
+    return url;
+  };
+
   const rawGallery: any[] = project.projectImages || [];
-  const combinedGallery = rawGallery.map((mediaDoc: any) => ({
+  const galleryImages = rawGallery.map((mediaDoc: any) => ({
     media: mediaDoc,
     videoUrl: null,
-    size: 'normal',
+    size: 'wide', // Images stay full-width as per previous layout
   }));
+
+  const videoLinks: any[] = project.videoLinks || [];
+  const galleryVideos = videoLinks.map((v: any) => ({
+    media: null,
+    videoUrl: formatVideoUrl(v.url),
+    size: 'normal', // Changed to normal to allow 2 videos per line
+  }));
+
+  const combinedGallery = [...galleryImages, ...galleryVideos];
 
   const nextCoverUrl = (nextProject as any)?.coverMedia?.url || '';
   const isNextCoverVideo = (nextProject as any)?.coverMedia?.mimeType?.startsWith('video/');
@@ -203,9 +234,9 @@ export default async function ProjectPage({
 
       <ProjectGallery gallery={combinedGallery} />
 
-      {nextProject && String(nextProject.id) !== String(id) && (
+      {nextProject && (nextProject as any).slug !== slug && (
         <section className={styles.nextSection}>
-          <Link href={`/project/${nextProject.id}`} className={styles.nextLink}>
+          <Link href={`/project/${nextIdentifier}`} className={styles.nextLink}>
             <div className={styles.nextBg}>
               {isNextCoverVideo ? (
                 <video
