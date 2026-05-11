@@ -10,9 +10,6 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '500mb',
     },
   },
-  serverActions: {
-    bodySizeLimit: '500mb',
-  },
   images: {
     remotePatterns: [
       {
