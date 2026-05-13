@@ -220,6 +220,7 @@ export default buildConfig({
         media: true,
       },
       bucket: process.env.S3_BUCKET_NAME as string,
+      clientUploads: true, // Enables direct uploads to S3 to bypass Next.js API limits
       config: {
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
